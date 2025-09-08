@@ -124,9 +124,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1268f85a9d418a941915d4740501d02c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonBallPrefab: {fileID: 2075466097137116281, guid: 58d54db2c026d0648894684fcfc6dd16, type: 3}
+  cannonBallPrefab:
+  - {fileID: 2075466097137116281, guid: 58d54db2c026d0648894684fcfc6dd16, type: 3}
+  - {fileID: 1662677222036106121, guid: e588a085e4294a5499778614988244ad, type: 3}
   firePoint: {fileID: 2489370019071040797}
   fireForce: 2000
+  angleXSlider: {fileID: 0}
+  angleYSlider: {fileID: 0}
 --- !u!1 &5554715905644937520
 GameObject:
   m_ObjectHideFlags: 0
