@@ -1,21 +1,23 @@
 using UnityEngine;
+using Proyecto26;
 
 public class SimulationManager : MonoBehaviour
 {
+    Report report = new Report();
+
     public static int piezasDerribadas;
-    public static Vector3 velocidadRelativa;
-    public static Vector3 impulso;
-    public static float tiempoDeVuelo;
+    public static int numeroDisparo = 0;
+    public static float anguloXDeArma;
+    public static float anguloYDeArma;
+    public static float masaDeProyectil;
+    public static float fuerzaDeDisparo;
+    public static bool acierto = false;
 
     public static void createReport()
     {
-        Debug.Log("Piezas Derribadas: " +  piezasDerribadas);
-        Debug.Log("Velocidad Relativa: " +  velocidadRelativa);
-        Debug.Log("Impulso de Colision: " + impulso);
-        Debug.Log("Tiempo de Vuelo: " + tiempoDeVuelo + " segundos");
+        Report report = new Report();
+        RestClient.Put("https://simulador-balistico-default-rtdb.firebaseio.com/" + numeroDisparo + ".json", report);
         piezasDerribadas = 0;
-        velocidadRelativa = Vector3.zero;
-        impulso = Vector3.zero;
-        tiempoDeVuelo = 0;
+        acierto = false;
     }
 }

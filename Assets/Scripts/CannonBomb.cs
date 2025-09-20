@@ -6,16 +6,10 @@ public class CannonBomb : MonoBehaviour
     [SerializeField] float power;
     [SerializeField] float radius;
     [SerializeField] float upforce;
-    public float flighTime;
-
-    private void Update()
-    {
-        flighTime += Time.deltaTime;
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        SimulationManager.tiempoDeVuelo = flighTime;
+        
         Vector3 explosionPosition = transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
         foreach (Collider collider in colliders)
@@ -23,6 +17,10 @@ public class CannonBomb : MonoBehaviour
             Rigidbody rb = collider.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                if (rb.GetComponent<Cubes>() != null)
+                {
+                    SimulationManager.acierto = true;
+                }
                 rb.AddExplosionForce(power, explosionPosition, radius, upforce, ForceMode.Impulse);
             }
         }
@@ -33,6 +31,7 @@ public class CannonBomb : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         SimulationManager.createReport();
+        Cannon.canShoot = true;
         Destroy(gameObject);
     }
 }

@@ -5,20 +5,34 @@ public class Cannon : MonoBehaviour
 {
     [SerializeField] private GameObject[] cannonBallPrefab;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireForce;
+    [SerializeField] private Slider fireForce;
     [SerializeField] private Slider angleXSlider;
     [SerializeField] private Slider angleYSlider;
+    [SerializeField] private Slider projectileMass;
     private int selectedAmmo = 0;
+    public static bool canShoot = true;
 
     public void Shoot()
     {
+        if (!canShoot)
+        {
+            return;
+        }
+
         if (cannonBallPrefab[selectedAmmo] != null & firePoint != null)
         {
             GameObject cannonBall = Instantiate(cannonBallPrefab[selectedAmmo], firePoint.position, firePoint.rotation);
             Rigidbody rb = cannonBall.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.AddForce(firePoint.up * fireForce);
+                rb.mass = projectileMass.value;
+                rb.AddForce(firePoint.up * fireForce.value);
+                SimulationManager.numeroDisparo++;
+                SimulationManager.anguloXDeArma = angleXSlider.value;
+                SimulationManager.anguloYDeArma = angleYSlider.value;
+                SimulationManager.fuerzaDeDisparo = fireForce.value;
+                SimulationManager.masaDeProyectil = rb.mass;
+                canShoot = false;
             }
         }
         else
