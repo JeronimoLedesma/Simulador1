@@ -1,9 +1,12 @@
 using UnityEngine;
 using Proyecto26;
+using UnityEngine.UI;
 
 public class SimulationManager : MonoBehaviour
 {
     Report report = new Report();
+
+    public InputField idSearch;
 
     public static int piezasDerribadas;
     public static int numeroDisparo = 0;
@@ -17,7 +20,17 @@ public class SimulationManager : MonoBehaviour
     {
         Report report = new Report();
         RestClient.Put("https://simulador-balistico-default-rtdb.firebaseio.com/" + numeroDisparo + ".json", report);
+        ReportShow.instance.ShowReport(report);
         piezasDerribadas = 0;
         acierto = false;
+    }
+
+    public void retrieveReport()
+    {
+        RestClient.Get<Report>("https://simulador-balistico-default-rtdb.firebaseio.com/" + idSearch + ".json").Then(response =>
+        {
+            report = response;
+            ReportShow.instance.ShowReport(report);
+        });
     }
 }
